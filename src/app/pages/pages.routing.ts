@@ -4,6 +4,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
 import { GraphComponent } from './graph/graph.component';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 
 
@@ -14,7 +15,8 @@ const routes: Routes = [
         children: [
             { path: '', component: DashboardComponent },
             { path: 'progress', component: ProgressComponent },
-            { path: 'graph', component: GraphComponent }
+            { path: 'graph', component: GraphComponent },
+            { path: 'account-settings', component: AccountSettingsComponent }
             //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
         ]
     }
