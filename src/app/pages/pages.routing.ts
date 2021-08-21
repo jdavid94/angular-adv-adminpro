@@ -8,6 +8,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromiseComponent } from './promise/promise.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -17,10 +18,11 @@ const routes: Routes = [
         component: PagesComponent,
         canActivate: [ AuthGuard ],
         children: [
-            { path: '', component: DashboardComponent, data: { title: 'Dashboard'} },
-            { path: 'progress', component: ProgressComponent, data: { title: 'Progress' } },
-            { path: 'graph', component: GraphComponent, data: { title: 'Graph' } },
             { path: 'account-settings', component: AccountSettingsComponent, data: { title: 'Account Settings' } },
+            { path: '', component: DashboardComponent, data: { title: 'Dashboard'} },
+            { path: 'graph', component: GraphComponent, data: { title: 'Graph' } },
+            { path: 'profile', component: ProfileComponent, data: { title: 'Profile' } },
+            { path: 'progress', component: ProgressComponent, data: { title: 'Progress' } },
             { path: 'promise', component: PromiseComponent, data: { title: 'Promise' } },
             { path: 'rxjs', component: RxjsComponent, data: { title: 'Rxjs' }}
             //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
