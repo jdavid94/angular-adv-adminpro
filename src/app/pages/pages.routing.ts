@@ -9,6 +9,7 @@ import { PromiseComponent } from './promise/promise.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintenance/users/users.component';
 
 
 
@@ -24,7 +25,9 @@ const routes: Routes = [
             { path: 'profile', component: ProfileComponent, data: { title: 'Profile' } },
             { path: 'progress', component: ProgressComponent, data: { title: 'Progress' } },
             { path: 'promise', component: PromiseComponent, data: { title: 'Promise' } },
-            { path: 'rxjs', component: RxjsComponent, data: { title: 'Rxjs' }}
+            { path: 'rxjs', component: RxjsComponent, data: { title: 'Rxjs' }},
+            //Maintenance
+            { path: 'users', component: UsersComponent, data: { title: 'Users' } }
             //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
         ]
     }

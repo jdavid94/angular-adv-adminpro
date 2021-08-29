@@ -44,15 +44,15 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  changeImage(event:any) {
+  changeImage(event:any):any {
     //console.log(event.target.files[0]);
     this.uploadedPhoto = event.target.files[0];
     if (!this.uploadedPhoto) {
-      this.imgTemp = null;
+      return this.imgTemp = null;
     }
     const reader = new FileReader();
-    //const url64 = reader.readAsDataURL(this.uploadedPhoto);
-    reader.onloadend = () => {
+    reader.readAsDataURL(this.uploadedPhoto);
+    reader.onloadend = () => {    
       this.imgTemp = reader.result;
     }
   }

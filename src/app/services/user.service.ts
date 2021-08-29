@@ -7,6 +7,7 @@ import { RegisterForm } from '../interfaces/register-form.interface';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
+import { LoadUser } from '../interfaces/load-users.interface';
 
 const base_url = environment.url_base;
 declare const gapi:any;
@@ -30,6 +31,14 @@ export class UserService {
 
   get uid():string {
     return this.user?.uid || '';
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
   }
 
   googleInit() {
@@ -78,19 +87,12 @@ export class UserService {
     )
   }
 
-  updateUser(data: {email:string, name:string, role: string}) {
+  updateUser(data: {email:string, name:string, roles: string}) {
     data = {
       ...data,
-      role: this.user?.role || ''
+      roles: this.user?.roles || ''
     };
-    return this.http.put(`${base_url}/users/${this.uid}`, data, {
-      headers: {
-        'x-token': this.token
-      }}).pipe(
-      tap((resp: any) => {
-        localStorage.setItem('token', resp.token)
-      })
-    )
+    return this.http.put(`${base_url}/users/${this.uid}`, data, this.headers);
   }
 
   login(formData: LoginForm) {
@@ -118,5 +120,33 @@ export class UserService {
         this.router.navigateByUrl('/login');
       })     
     });
+  }
+
+  loadUsers(from:number = 0) {
+    const url = `${base_url}/users?from=${from}`;
+    return this.http.get<LoadUser>(url, this.headers)
+    .pipe( 
+      map(resp => {
+        const users = resp.users.map(user => new User(user.name, user.email, '', user.img, user.google, user.roles, user.uid));
+        return {
+          total: resp.total,
+          users
+        };
+      })
+    )
+  }
+
+  deleteUser(user: User) {
+    const url = `${base_url}/users/${user.uid}`;
+    return this.http.delete(url, this.headers);
+  }
+
+  updateRole(user: User) {
+    //data = {
+    //  ...data,
+    //  roles: this.user?.roles || ''
+    //};
+    //console.log(user);
+    return this.http.put(`${base_url}/users/${user.uid}`, user, this.headers);      
   }
 }
