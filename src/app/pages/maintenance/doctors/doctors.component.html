@@ -1,0 +1,68 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Doctors Search..." (keyup)="search(txtTerm.value)" #txtTerm>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row fadeIn fast" *ngIf="loading">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Loading</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Wait Please</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!loading">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="card-title">Doctors ({{ doctors.length }})</h4>
+                        <h6 class="card-subtitle">Doctors Registered</h6>
+                    </div>
+                    <div class="col">
+                        <div class="text-right">
+                            <button [routerLink]="['/dashboard/doctor/new']" class="btn btn-primary"><i class="fas fa-user-sm"></i> Add Doctor</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="w100">Photo</th>
+                                <th>Name</th>
+                                <th class="w100 text-nowrap">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let doc of doctors">
+                                <td class="text-center">
+                                    <img [src]="doc.img | image: 'doctors'" [alt]="doc.name" class="w100 pointer" (click)="openModal(doc)">
+                                </td>
+                                <td>
+                                    {{doc.name}}
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/dashboard/doctor', doc._id]" ata-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a (click)="deleteDoctor(doc)" class=" pointer " data-toggle="tooltip " data-original-title="Close "> <i class="fa fa-close text-danger "></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-secondary ">Previous</button> &nbsp;
+                <button class="btn btn-secondary ">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
