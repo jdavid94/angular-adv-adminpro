@@ -29,6 +29,13 @@ export class UserService {
     return localStorage.getItem('token') || '';
   }
 
+  get role(): any {
+    if (this.user?.roles) {
+      return this.user.roles;
+    }    
+    return null;
+  }
+
   get uid():string {
     return this.user?.uid || '';
   }
@@ -54,6 +61,11 @@ export class UserService {
     })
   }
 
+  saveLocalStorage(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
   validatedToken(): Observable<boolean> {
     //const token = localStorage.getItem('token') || '';
     return  this.http.get(`${base_url}/login/renew`, {
@@ -71,7 +83,7 @@ export class UserService {
           roles,
           uid} = resp.user;
         this.user = new User(name, email, '', img, google, roles, uid);
-        localStorage.setItem('token', resp.token);
+        this.saveLocalStorage(resp.token, resp.menu);    
         return true;
       }),
      
@@ -82,7 +94,7 @@ export class UserService {
   createUser(formData: RegisterForm) {
     return this.http.post(`${base_url}/users`, formData).pipe(
       tap((resp: any) => {
-        localStorage.setItem('token', resp.token)
+        this.saveLocalStorage(resp.token, resp.menu);
       })
     )
   }
@@ -99,7 +111,7 @@ export class UserService {
     return this.http.post(`${base_url}/login`, formData)
     .pipe(
       tap((resp: any) => {
-        localStorage.setItem('token', resp.token)
+        this.saveLocalStorage(resp.token, resp.menu);
       })
     )
   }
@@ -108,13 +120,14 @@ export class UserService {
     return this.http.post(`${base_url}/login/google`, {token})
       .pipe(
         tap((resp: any) => {
-          localStorage.setItem('token', resp.token)
+          this.saveLocalStorage(resp.token, resp.menu);
         })
       )
   }
 
   logOut(){
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
     this.auth2.signOut().then( () => {
       this.ngZone.run(() => {
         this.router.navigateByUrl('/login');

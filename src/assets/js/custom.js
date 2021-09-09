@@ -142,7 +142,6 @@ const costumInitFunctions = () => {
     });
 }
 
-
 $(function() {
     "use strict";
     $(function() {

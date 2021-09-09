@@ -17,6 +17,7 @@ import { HospitalsComponent } from './maintenance/hospitals/hospitals.component'
 import { DoctorsComponent } from './maintenance/doctors/doctors.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { DoctorComponent } from './maintenance/doctors/doctor.component';
+import { SearchsComponent } from './searchs/searchs.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { DoctorComponent } from './maintenance/doctors/doctor.component';
     UsersComponent,
     HospitalsComponent,
     DoctorsComponent,
-    DoctorComponent
+    DoctorComponent,
+    SearchsComponent
   ],
   exports: [
     DashboardComponent,
@@ -46,11 +48,11 @@ import { DoctorComponent } from './maintenance/doctors/doctor.component';
   imports: [
     CommonModule,
     SharedModule,
-    AppRoutingModule,
     FormsModule,
     ComponentsModule,
     ReactiveFormsModule,
-    PipesModule
+    PipesModule,
+    AppRoutingModule
 
   ]
 })
